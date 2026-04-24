@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlowRoute — Real-Time Traffic Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="page-home">
+
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-route"></i></span>
+      <span class="logo-text">FlowRoute</span>
+      <span class="logo-badge">BETA</span>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-pill active">Planner</span>
+      <span class="nav-pill">Analytics</span>
+      <span class="nav-pill">About</span>
+    </nav>
+  </header>
+
+  <main class="home-main">
+    <section class="hero">
+      <div class="hero-tag"><i class="fa-solid fa-satellite-dish"></i> Live Traffic Intelligence</div>
+      <h1 class="hero-title">
+        Navigate Smarter,<br/>
+        <span class="gradient-text">Arrive Faster</span>
+      </h1>
+      <p class="hero-sub">Real-time route analysis powered by dynamic traffic simulation. Know before you go.</p>
+    </section>
+
+    <div class="planner-card" id="plannerCard">
+      <div class="planner-card-header">
+        <span><i class="fa-solid fa-map-location-dot"></i> Route Planner</span>
+        <span class="live-dot"><span class="dot-pulse"></span>LIVE</span>
+      </div>
+
+      <form id="routeForm" novalidate>
+        <!-- Source -->
+        <div class="input-group">
+          <label for="source">Starting Point</label>
+          <div class="input-wrap">
+            <span class="input-icon source-icon"><i class="fa-solid fa-circle-dot"></i></span>
+            <input type="text" id="source" name="source" placeholder="e.g. MG Road, Bengaluru" autocomplete="off" required/>
+            <button type="button" class="locate-btn" title="Use my location"><i class="fa-solid fa-location-crosshairs"></i></button>
+          </div>
+          <span class="error-msg" id="sourceErr">Please enter a starting point.</span>
+        </div>
+
+        <!-- Route line visual -->
+        <div class="route-connector">
+          <div class="connector-line"></div>
+          <button type="button" class="swap-btn" id="swapBtn" title="Swap source and destination">
+            <i class="fa-solid fa-arrow-up-arrow-down"></i>
+          </button>
+        </div>
+
+        <!-- Destination -->
+        <div class="input-group">
+          <label for="destination">Destination</label>
+          <div class="input-wrap">
+            <span class="input-icon dest-icon"><i class="fa-solid fa-location-dot"></i></span>
+            <input type="text" id="destination" name="destination" placeholder="e.g. Whitefield, Bengaluru" autocomplete="off" required/>
+          </div>
+          <span class="error-msg" id="destErr">Please enter a destination.</span>
+        </div>
+
+        <!-- Departure Time -->
+        <div class="time-section">
+          <label class="section-label"><i class="fa-regular fa-clock"></i> Departure Time</label>
+          <div class="time-chips" id="timeChips">
+            <button type="button" class="chip active" data-value="now">Leave Now</button>
+            <button type="button" class="chip" data-value="15">In 15 min</button>
+            <button type="button" class="chip" data-value="30">In 30 min</button>
+            <button type="button" class="chip" data-value="custom">Custom</button>
+          </div>
+          <div class="custom-time-wrap" id="customTimeWrap">
+            <input type="time" id="customTime" name="customTime" />
+            <span class="time-hint">Select exact departure time</span>
+          </div>
+        </div>
+
+        <!-- Vehicle Type -->
+        <div class="vehicle-section">
+          <label class="section-label"><i class="fa-solid fa-car"></i> Vehicle Type</label>
+          <div class="vehicle-chips">
+            <button type="button" class="chip-vehicle active" data-vehicle="car">
+              <i class="fa-solid fa-car"></i><span>Car</span>
+            </button>
+            <button type="button" class="chip-vehicle" data-vehicle="bike">
+              <i class="fa-solid fa-motorcycle"></i><span>Bike</span>
+            </button>
+            <button type="button" class="chip-vehicle" data-vehicle="truck">
+              <i class="fa-solid fa-truck"></i><span>Truck</span>
+            </button>
+            <button type="button" class="chip-vehicle" data-vehicle="transit">
+              <i class="fa-solid fa-bus"></i><span>Transit</span>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text"><i class="fa-solid fa-bolt"></i> Analyze Route</span>
+          <span class="btn-loader" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i> Processing…</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <span class="stat-num">2.4M+</span>
+        <span class="stat-label">Routes Analyzed</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">98.7%</span>
+        <span class="stat-label">ETA Accuracy</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">142</span>
+        <span class="stat-label">Cities Covered</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Alternate Routes</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="radar-ring">
+        <div class="radar-sweep"></div>
+        <div class="radar-dot center-dot"></div>
+        <div class="radar-dot dot-a"></div>
+        <div class="radar-dot dot-b"></div>
+        <div class="radar-dot dot-c"></div>
+      </div>
+      <p class="loading-title">Analyzing Traffic</p>
+      <p class="loading-sub" id="loadingMsg">Scanning live data streams…</p>
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loadingBar"></div>
+      </div>
+      <p class="loading-step" id="loadingStep">Initializing sensors</p>
+    </div>
+  </div>
+
+  <!--
+    ┌─────────────────────────────────────────────────────┐
+    │  DEPLOYMENT CONFIG                                  │
+    │  Set FLOWROUTE_API_URL to your backend's public URL │
+    │  e.g. https://api.yourdomain.com                    │
+    │  Leave blank to use localhost:8000 in dev.          │
+    └─────────────────────────────────────────────────────┘
+  -->
+  <script>
+    // Override this in production: window.FLOWROUTE_API_URL = "https://your-api.com";
+    window.FLOWROUTE_API_URL = window.FLOWROUTE_API_URL || "http://localhost:8000";
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
