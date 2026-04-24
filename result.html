@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlowRoute — Route Results</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="page-result">
+
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-route"></i></span>
+      <span class="logo-text">FlowRoute</span>
+      <span class="logo-badge">BETA</span>
+    </div>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+      <i class="fa-solid fa-arrow-left"></i> New Search
+    </button>
+  </header>
+
+  <main class="result-main">
+
+    <!-- Journey Summary Bar -->
+    <div class="journey-bar reveal-item">
+      <div class="journey-point">
+        <span class="journey-dot source-dot"></span>
+        <div>
+          <span class="journey-label">FROM</span>
+          <span class="journey-value" id="r-source">—</span>
+        </div>
+      </div>
+      <div class="journey-arrow">
+        <div class="arrow-line"></div>
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+      <div class="journey-point">
+        <span class="journey-dot dest-dot"></span>
+        <div>
+          <span class="journey-label">TO</span>
+          <span class="journey-value" id="r-dest">—</span>
+        </div>
+      </div>
+      <div class="journey-meta">
+        <span><i class="fa-regular fa-clock"></i> <span id="r-departure">Now</span></span>
+        <span><i class="fa-solid fa-car"></i> <span id="r-vehicle">Car</span></span>
+      </div>
+    </div>
+
+    <!-- Top KPI Cards -->
+    <div class="kpi-grid">
+      <!-- ETA Card -->
+      <div class="kpi-card eta-card reveal-item" style="--delay:0.05s">
+        <div class="kpi-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Estimated Arrival</span>
+          <span class="kpi-value" id="r-eta">—</span>
+          <span class="kpi-sub" id="r-duration">— min travel time</span>
+        </div>
+        <div class="kpi-badge" id="r-eta-badge">On Time</div>
+      </div>
+
+      <!-- Traffic Card -->
+      <div class="kpi-card traffic-card reveal-item" style="--delay:0.1s">
+        <div class="kpi-icon" id="r-traffic-icon"><i class="fa-solid fa-gauge-high"></i></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Traffic Condition</span>
+          <span class="kpi-value" id="r-traffic">—</span>
+          <span class="kpi-sub" id="r-traffic-sub">—</span>
+        </div>
+        <div class="traffic-meter">
+          <div class="meter-bar">
+            <div class="meter-fill" id="r-meter"></div>
+          </div>
+          <div class="meter-labels">
+            <span>Low</span><span>Med</span><span>High</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Distance Card -->
+      <div class="kpi-card dist-card reveal-item" style="--delay:0.15s">
+        <div class="kpi-icon"><i class="fa-solid fa-road"></i></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Total Distance</span>
+          <span class="kpi-value" id="r-distance">—</span>
+          <span class="kpi-sub" id="r-speed">Avg speed: — km/h</span>
+        </div>
+        <div class="kpi-badge green">Optimal</div>
+      </div>
+
+      <!-- Fuel Card -->
+      <div class="kpi-card fuel-card reveal-item" style="--delay:0.2s">
+        <div class="kpi-icon"><i class="fa-solid fa-gas-pump"></i></div>
+        <div class="kpi-body">
+          <span class="kpi-label">Est. Fuel Cost</span>
+          <span class="kpi-value" id="r-fuel">—</span>
+          <span class="kpi-sub" id="r-emission">CO₂ saved: — kg</span>
+        </div>
+        <div class="kpi-badge" id="r-fuel-badge">Efficient</div>
+      </div>
+    </div>
+
+    <div class="result-columns">
+
+      <!-- Best Route Card -->
+      <div class="route-card best-route reveal-item" style="--delay:0.25s">
+        <div class="route-card-header">
+          <span class="route-tag best-tag"><i class="fa-solid fa-star"></i> Best Route</span>
+          <span class="route-chip" id="r-best-time">— min</span>
+        </div>
+        <h3 class="route-name" id="r-best-name">—</h3>
+        <div class="route-steps" id="r-best-steps">
+          <!-- Dynamically filled -->
+        </div>
+        <div class="route-footer">
+          <div class="route-stat"><i class="fa-solid fa-road"></i> <span id="r-best-dist">—</span></div>
+          <div class="route-stat"><i class="fa-solid fa-gauge"></i> <span id="r-best-speed">—</span></div>
+          <div class="route-stat traffic-indicator" id="r-best-traffic-badge">—</div>
+          <button class="route-action-btn">Navigate <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Alternate Routes -->
+      <div class="alt-section reveal-item" style="--delay:0.3s">
+        <div class="alt-header">
+          <span><i class="fa-solid fa-code-branch"></i> Alternative Routes</span>
+          <span class="alt-count" id="r-alt-count">0 options</span>
+        </div>
+        <div id="r-alt-routes">
+          <!-- Dynamically filled -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Conditions Timeline -->
+    <div class="timeline-card reveal-item" style="--delay:0.35s">
+      <div class="timeline-header">
+        <i class="fa-solid fa-chart-line"></i> Traffic Forecast Along Route
+      </div>
+      <div class="timeline-bars" id="r-timeline">
+        <!-- Dynamically filled -->
+      </div>
+      <div class="timeline-legend">
+        <span class="leg-item low">Low</span>
+        <span class="leg-item medium">Medium</span>
+        <span class="leg-item high">High</span>
+      </div>
+    </div>
+
+    <!-- Tips Card -->
+    <div class="tips-card reveal-item" style="--delay:0.4s">
+      <div class="tips-header"><i class="fa-solid fa-lightbulb"></i> Smart Travel Tips</div>
+      <div class="tips-grid" id="r-tips">
+        <!-- Dynamically filled -->
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    window.FLOWROUTE_API_URL = window.FLOWROUTE_API_URL || "http://localhost:8000";
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
